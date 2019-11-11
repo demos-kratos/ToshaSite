@@ -1,0 +1,9 @@
+﻿
+<div class="double-entity" onclick="go('@EntityObject.Link')">
+    <span>@EntityObject.Text</span>
+</div>
+
+@code {
+    [Parameter]
+    public Entity EntityObject { get; set; }
+}

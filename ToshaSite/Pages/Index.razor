@@ -1,5 +1,33 @@
 ﻿@page "/"
+@inject IEntityService Service
 
-<h1>Hello, world!</h1>
+    <div class="container">
+        @foreach(var e in ToshaEntities)
+        {
+            if(e.ImageLink != null)
+            {
+                <ToshaEntity EntityObject="@e" />
+            }
+            else
+            {
+                <DoubleToshaEntity EntityObject="@e" />
+            }
+        }
+    </div>
+    
+<button @onclick="Add">ADD</button>
+<button onclick="show()">SHOW</button>
 
-Welcome to your new app.
+@code {
+    List<Entity> ToshaEntities = new List<Entity>();
+
+    protected override void OnInitialized()
+    {
+        ToshaEntities.AddRange(Service.GetEntities());
+    }
+
+    void Add()
+    {
+        ToshaEntities.Add(ToshaEntities.Last());
+    }
+}

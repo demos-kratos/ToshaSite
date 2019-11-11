@@ -1,0 +1,11 @@
+﻿
+<div class="entity" onclick="go('@EntityObject.Link')">
+    <div>
+        <img src="@EntityObject.ImageLink" />
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Entity EntityObject { get; set; }
+}
