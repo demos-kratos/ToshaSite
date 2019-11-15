@@ -1,0 +1,34 @@
+﻿@inject IModalService Modals
+<EditForm Model="@EntityObject" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <p>
+        <InputCheckbox @bind-Value="IsDouble" />
+    </p>
+    
+    <p style="display: @(IsDouble ? "initial" : "none")">
+        <InputText id="name" @bind-Value="EntityObject.Text" />
+    </p>
+    
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public Entity EntityObject { get; set; }
+
+    [Parameter]
+    public bool IsDouble { get; set; }
+
+    protected override void OnParametersSet()
+    {
+
+    }
+
+    void HandleValidSubmit()
+    {
+
+    }
+}

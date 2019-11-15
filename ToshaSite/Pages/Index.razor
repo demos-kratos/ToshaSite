@@ -1,25 +1,24 @@
 ﻿@page "/"
 @inject IEntityService Service
 
-    <div class="container">
-        @foreach(var e in ToshaEntities)
+<div class="container">
+    @foreach (var e in ToshaEntities)
+    {
+        if (e.ImageLink != null)
         {
-            if(e.ImageLink != null)
-            {
-                <ToshaEntity EntityObject="@e" />
-            }
-            else
-            {
-                <DoubleToshaEntity EntityObject="@e" />
-            }
+            <ToshaEntity EntityObject="@e" />
         }
-    </div>
-    
-<button @onclick="Add">ADD</button>
-<button onclick="show()">SHOW</button>
+        else
+        {
+            <DoubleToshaEntity EntityObject="@e" />
+        }
+    }
+
+</div>
 
 @code {
     List<Entity> ToshaEntities = new List<Entity>();
+    bool EditorMode;
 
     protected override void OnInitialized()
     {

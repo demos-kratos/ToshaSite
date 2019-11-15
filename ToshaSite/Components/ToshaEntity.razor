@@ -1,11 +1,7 @@
-﻿
-<div class="entity" onclick="go('@EntityObject.Link')">
+﻿@inherits BaseEntityComponent
+
+<div class="entity" @onclick="Click">
     <div>
         <img src="@EntityObject.ImageLink" />
     </div>
 </div>
-
-@code {
-    [Parameter]
-    public Entity EntityObject { get; set; }
-}

@@ -1,9 +1,5 @@
-﻿
-<div class="double-entity" onclick="go('@EntityObject.Link')">
+﻿@inherits BaseEntityComponent
+
+<div class="double-entity" @onclick="Click">
     <span>@EntityObject.Text</span>
 </div>
-
-@code {
-    [Parameter]
-    public Entity EntityObject { get; set; }
-}

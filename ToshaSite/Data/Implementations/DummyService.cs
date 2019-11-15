@@ -36,5 +36,20 @@ namespace ToshaSite.Data.Implementations
         {
             return Task.FromResult(1488);
         }
+
+        public void AddEntity(Entity e)
+        {
+            Entities.Add(e);
+        }
+
+        public void DeleteEntity(Entity e)
+        {
+            Entities.Remove(e);
+        }
+
+        public bool CheckCredentials(string username, string password)
+        {
+            return true;
+        }
     }
 }
