@@ -42,8 +42,6 @@ body {
 }
 
 .entity > div {
-    clip-path: ellipse(50% 50%);
-    -webkit-clip-path: ellipse(50% 50%);
     transition: transform ease-in-out 0.1s;
 }
 
@@ -54,6 +52,8 @@ body {
 .entity > div > img {
     width: 100%;
     height: 100%;
+    clip-path: ellipse(50% 50%);
+    -webkit-clip-path: ellipse(50% 50%);
 }
 
 .double-entity {

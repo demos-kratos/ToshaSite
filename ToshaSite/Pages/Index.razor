@@ -6,19 +6,24 @@
     {
         if (e.ImageLink != null)
         {
-            <ToshaEntity EntityObject="@e" />
+            <ToshaEntity EntityObject="e" />
         }
         else
         {
-            <DoubleToshaEntity EntityObject="@e" />
+            <DoubleToshaEntity EntityObject="e" />
         }
     }
-
+    @if(EditorMode)
+    {
+        <ToshaEntity EditorMode="EditorMode" />
+    }
 </div>
+
 
 @code {
     List<Entity> ToshaEntities = new List<Entity>();
-    bool EditorMode;
+    bool EditorMode = true;
+    Entity EditorObject = new Entity() {  };
 
     protected override void OnInitialized()
     {

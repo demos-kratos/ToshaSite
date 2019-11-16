@@ -13,6 +13,9 @@ namespace ToshaSite.Components
         [Inject]
         protected IJSRuntime Js { get; set; }
 
+        [Inject]
+        protected IModalService Modals { get; set; }
+
         [Parameter]
         public Entity EntityObject { get; set; }
         [Parameter]

@@ -2,6 +2,6 @@
 
 <div class="entity" @onclick="Click">
     <div>
-        <img src="@EntityObject.ImageLink" />
+        <img src="@(EditorMode ? "~/images/plus.svg" : EntityObject.ImageLink)" />
     </div>
 </div>
