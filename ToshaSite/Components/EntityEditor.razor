@@ -22,6 +22,9 @@
     [Parameter]
     public bool IsDouble { get; set; }
 
+    [Parameter]
+    public Action<Entity> EditCompleted { get; set; }
+
     protected override void OnParametersSet()
     {
 

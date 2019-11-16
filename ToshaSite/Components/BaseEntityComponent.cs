@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazored.Modal;
+using Blazored.Modal.Services;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
@@ -20,12 +22,18 @@ namespace ToshaSite.Components
         public Entity EntityObject { get; set; }
         [Parameter]
         public bool EditorMode { get; set; }
-
+        [Parameter]
+        public Action<Entity> EditCompleted { get; set; }
+        
         protected async void Click()
         {
             if(EditorMode)
             {
-                // open modal
+                var title = EntityObject == null ? "Создание" : "Редактирование";
+                var parameters = new ModalParameters();
+                parameters.Add("EntityObject", EntityObject);
+                parameters.Add("EditCompleted", EditCompleted);
+                Modals.Show<EntityEditor>(title, parameters);
             }
             else
             {

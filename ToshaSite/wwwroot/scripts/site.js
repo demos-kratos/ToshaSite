@@ -2,7 +2,10 @@
     window.open(link);
 }
 
-function show() {
-    DotNet.invokeMethodAsync('ToshaSite', 'GetNum')
-        .then(data => alert(data));
+function keyDown(e) {
+    DotNet.invokeMethodAsync('ToshaSite', 'KeyDown', e.key);
+}
+
+function keyUp(e) {
+    DotNet.invokeMethodAsync('ToshaSite', 'KeyUp', e.key);
 }

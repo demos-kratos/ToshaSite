@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inject IEntityService Service
+@inject IToastService Toast
 
 <div class="container">
     @foreach (var e in ToshaEntities)
@@ -15,23 +16,50 @@
     }
     @if(EditorMode)
     {
-        <ToshaEntity EditorMode="EditorMode" />
+        <ToshaEntity EditorMode="EditorMode" EditCompleted="AddOrEditEntity" />
     }
 </div>
 
 
 @code {
-    List<Entity> ToshaEntities = new List<Entity>();
-    bool EditorMode = true;
-    Entity EditorObject = new Entity() {  };
+    List<Entity> ToshaEntities { get; set; } = new List<Entity>();
+    public static bool EditorMode { get; set; } = false;
 
     protected override void OnInitialized()
     {
         ToshaEntities.AddRange(Service.GetEntities());
     }
 
-    void Add()
+    void AddOrEditEntity(Entity newEntity)
     {
-        ToshaEntities.Add(ToshaEntities.Last());
+        var e = ToshaEntities.FirstOrDefault(x => x.Id == newEntity.Id);
+        if(e != null)
+        {
+            ToshaEntities.Remove(e);
+        }
+        ToshaEntities.Insert(0, newEntity);
+    }
+
+    static List<string> KeysDown = new List<string>();
+
+    [JSInvokable]
+    public static void KeyDown(string key)
+    {
+        if(!KeysDown.Contains(key))
+        {
+            KeysDown.Add(key);
+
+            if(KeysDown.Contains("a") && KeysDown.Contains("n") && KeysDown.Contains("t") && KeysDown.Contains("o"))
+            {
+                EditorMode = !EditorMode;
+                //Toast.ShowInfo("EDITOR MODE " + (EditorMode ? "ON" : "OFF"));
+            }
+        }
+    }
+
+    [JSInvokable]
+    public static void KeyUp(string key)
+    {
+        KeysDown.Remove(key);
     }
 }
