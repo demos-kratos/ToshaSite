@@ -1,19 +1,30 @@
 ﻿@inject IModalService Modals
-<EditForm Model="@EntityObject" OnValidSubmit="@HandleValidSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
 
-    <p>
-        <InputCheckbox @bind-Value="IsDouble" />
-    </p>
-    
-    <p style="display: @(IsDouble ? "initial" : "none")">
-        <InputText id="name" @bind-Value="EntityObject.Text" />
-    </p>
-    
+<style>
+    .form {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 2fr 3fr;
+        grid-auto-rows: 100px;
+        grid-auto-flow: column;
+    }
 
-    <button type="submit">Submit</button>
-</EditForm>
+    .form > *:nth-child(2n+1) {
+        
+    }
+</style>
+
+<div class="form">
+    <label>
+        One
+    </label>
+    <input type="text" />
+
+    <label>
+        Two
+    </label>
+    <input type="text" />
+</div>
 
 @code {
     [Parameter]

@@ -10,15 +10,14 @@
     <title>АНТОН КРИВЯКИН</title>
     <base href="~/" />
     <link href="~/css/site.css" rel="stylesheet" />
-    <script src="~/scripts/site.js"></script>
     <link href="_content/Blazored.Modal/blazored-modal.css" rel="stylesheet" />
-    <link href="_content/Blazored.Toast/blazored-toast.css" rel="stylesheet" />
 </head>
-<body onkeydown="keyDown(event)" onkeyup="keyUp(event)">
+<body>
     <app>
         @(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))
     </app>
-
     <script src="_framework/blazor.server.js"></script>
+    <script src="~/scripts/site.js"></script>
 </body>
+
 </html>

@@ -1,65 +1,62 @@
-﻿@page "/"
+﻿@using System.Threading
+
+@page "/{token}"
+@page "/"
+
 @inject IEntityService Service
-@inject IToastService Toast
+@inject ITokenService Tokens
 
 <div class="container">
+    <AddEntity EditorMode="EditorMode" EditCompleted="AddOrEditEntity" />
     @foreach (var e in ToshaEntities)
     {
         if (e.ImageLink != null)
         {
-            <ToshaEntity EntityObject="e" />
+            <ToshaEntity EntityObject="e" EditorMode="EditorMode" />
         }
         else
         {
-            <DoubleToshaEntity EntityObject="e" />
+            <DoubleToshaEntity EntityObject="e" EditorMode="EditorMode" />
         }
-    }
-    @if(EditorMode)
-    {
-        <ToshaEntity EditorMode="EditorMode" EditCompleted="AddOrEditEntity" />
     }
 </div>
 
 
+
 @code {
+    [Parameter]
+    public string Token { get; set; }
+
     List<Entity> ToshaEntities { get; set; } = new List<Entity>();
-    public static bool EditorMode { get; set; } = false;
+    bool EditorMode { get; set; } = false;
+
+    private Timer _timer;
 
     protected override void OnInitialized()
     {
         ToshaEntities.AddRange(Service.GetEntities());
+
+        if(Token != null)
+        {
+            var validBy = Tokens.CheckToken(Token);
+            if(validBy.HasValue)
+            {
+                EditorMode = true;
+                _timer = new Timer(_ =>
+                {
+                    EditorMode = false;
+                }, null, (int)((validBy.Value - DateTime.Now).TotalMilliseconds), Timeout.Infinite);
+            }
+        }
     }
 
     void AddOrEditEntity(Entity newEntity)
     {
         var e = ToshaEntities.FirstOrDefault(x => x.Id == newEntity.Id);
-        if(e != null)
+        if (e != null)
         {
             ToshaEntities.Remove(e);
         }
         ToshaEntities.Insert(0, newEntity);
-    }
-
-    static List<string> KeysDown = new List<string>();
-
-    [JSInvokable]
-    public static void KeyDown(string key)
-    {
-        if(!KeysDown.Contains(key))
-        {
-            KeysDown.Add(key);
-
-            if(KeysDown.Contains("a") && KeysDown.Contains("n") && KeysDown.Contains("t") && KeysDown.Contains("o"))
-            {
-                EditorMode = !EditorMode;
-                //Toast.ShowInfo("EDITOR MODE " + (EditorMode ? "ON" : "OFF"));
-            }
-        }
-    }
-
-    [JSInvokable]
-    public static void KeyUp(string key)
-    {
-        KeysDown.Remove(key);
     }
 }

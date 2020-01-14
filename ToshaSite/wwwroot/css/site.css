@@ -25,7 +25,7 @@ body {
         grid-auto-rows: calc(25vw - 5px);
     }
 
-    .double-entity > span {
+    .double-entity > div > span {
         font-size: 3vw;
     }
 }
@@ -36,7 +36,7 @@ body {
         grid-auto-rows: calc(12.5vw - 4.5px);
     }
 
-    .double-entity > span {
+    .double-entity > div > span {
         font-size: 1.5vw;
     }
 }
@@ -58,6 +58,9 @@ body {
 
 .double-entity {
     grid-column: span 2;
+}
+
+.double-entity > div {    
     border: 2px solid white;
     box-sizing: border-box;
     border-radius: 50%;
@@ -69,46 +72,17 @@ body {
     transition: transform ease-in-out 0.1s;
 }
 
-    .double-entity:hover {
-        transform: scale(0.9, 0.9);
-    }
+.double-entity:hover > div {
+    transform: scale(0.9, 0.9);
+}
 
-    .double-entity > span {
-        text-align: center;
-        font-family: serif;
-        color: white;
-        width: 80%;
-    }
+.double-entity > div > span {
+    text-align: center;
+    font-family: serif;
+    color: white;
+    width: 80%;
+}
 
 span:hover {
     cursor: default;
-}
-
-
-.lds-dual-ring {
-    display: inline-block;
-    width: 64px;
-    height: 64px;
-}
-
-    .lds-dual-ring:after {
-        content: " ";
-        display: block;
-        width: 46px;
-        height: 46px;
-        margin: 1px;
-        border-radius: 50%;
-        border: 5px solid #fff;
-        border-color: #fff transparent #fff transparent;
-        animation: lds-dual-ring 1.2s linear infinite;
-    }
-
-@keyframes lds-dual-ring {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
 }

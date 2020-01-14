@@ -24,10 +24,10 @@ namespace ToshaSite.Components
         public bool EditorMode { get; set; }
         [Parameter]
         public Action<Entity> EditCompleted { get; set; }
-        
-        protected async void Click()
+
+        protected async Task Click()
         {
-            if(EditorMode)
+            if (EditorMode)
             {
                 var title = EntityObject == null ? "Создание" : "Редактирование";
                 var parameters = new ModalParameters();

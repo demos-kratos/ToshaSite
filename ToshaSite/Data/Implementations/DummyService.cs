@@ -18,7 +18,7 @@ namespace ToshaSite.Data.Implementations
                 var e = new Entity();
                 var style = r.NextDouble() > 0.5 ? "frogideas" : "heatwave";
                 e.Id = i;
-                e.ImageLink = r.NextDouble() > 0.2 ? $"http://tinygraphs.com/squares/{r.Next()}?theme={style}&numcolors=4&size=800&fmt=svg" : null;
+                e.ImageLink = r.NextDouble() > 0.2 ? $"http://tinygraphs.com/squares/{r.Next()}?theme={style}&numcolors=4&size=800&fmt=png" : null;
                 e.Text = "Здесь должен быть нормальный текст, но я ебал этим ща заниматься, такшо вот вам рыба.";
                 e.Link = "https://www.reddit.com";
 
