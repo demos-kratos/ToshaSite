@@ -7,7 +7,7 @@
 @inject ITokenService Tokens
 
 <div class="container">
-    <AddEntity EditorMode="EditorMode" EditCompleted="AddOrEditEntity" />
+    <AddEntity EditorMode="EditorMode" />
     @foreach (var e in ToshaEntities)
     {
         if (e.ImageLink != null)
@@ -20,8 +20,6 @@
         }
     }
 </div>
-
-
 
 @code {
     [Parameter]

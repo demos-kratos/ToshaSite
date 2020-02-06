@@ -31,12 +31,6 @@ namespace ToshaSite.Data.Implementations
             return Entities;
         }
 
-        [JSInvokable]
-        public static Task<int> GetNum()
-        {
-            return Task.FromResult(1488);
-        }
-
         public void AddEntity(Entity e)
         {
             Entities.Add(e);
@@ -44,7 +38,7 @@ namespace ToshaSite.Data.Implementations
 
         public void DeleteEntity(Entity e)
         {
-            Entities.Remove(e);
+            Entities.Remove(Entities.FirstOrDefault(x => x.Id == e.Id));
         }
 
         public bool CheckCredentials(string username, string password)

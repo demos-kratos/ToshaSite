@@ -2,46 +2,83 @@
 
 <style>
     .form {
-        width: 100%;
-        display: grid;
-        grid-template-columns: 2fr 3fr;
-        grid-auto-rows: 100px;
-        grid-auto-flow: column;
+        width: 400px;
     }
 
-    .form > *:nth-child(2n+1) {
-        
+    .form div {
+        margin: 7px;
+    }
+
+    .form button {
+        margin-top: 15px;
+    }
+
+    .form label {
+        width: 20%;
+        display: inline-block;
+    }
+
+    .form input {
+        width: 70%;
     }
 </style>
 
 <div class="form">
-    <label>
-        One
-    </label>
-    <input type="text" />
+    <div>
+        <label for="i-link">Ссылка</label>
+        <input @bind="EntityObject.Link" id="i-link" type="text" />
+    </div>
 
-    <label>
-        Two
-    </label>
-    <input type="text" />
+    <div>
+        <label for="i-double">Двойная</label>
+        <input style="width: auto;" @bind="IsDouble" id="i-double" type="checkbox" />
+    </div>
+
+    @if (IsDouble)
+    {
+        <div>
+            <label for="i-text">Текст</label>
+            <input @bind="EntityObject.Text" id="i-text" type="text" />
+        </div>
+    }
+    else
+    {
+        <div>
+            <label for="i-pic">Картинка</label>
+            <input @bind="EntityObject.ImageLink" id="i-pic" type="text" />
+        </div>
+    }
+
+    <button @onclick="SaveClicked">Сохранить</button>
+    @if (!Creating)
+    {
+        <button>Удалить</button>
+    }
 </div>
 
 @code {
-    [Parameter]
     public Entity EntityObject { get; set; }
 
-    [Parameter]
     public bool IsDouble { get; set; }
 
-    [Parameter]
-    public Action<Entity> EditCompleted { get; set; }
+    public bool Creating { get; set; }
 
-    protected override void OnParametersSet()
+    [CascadingParameter] ModalParameters Parameters { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        EntityObject = Parameters.Get<Entity>("EntityObject");
+        IsDouble = EntityObject.Text != null;
+        Creating = Parameters.Get<bool>("Creating");
+    }
+
+    private void SaveClicked()
     {
 
     }
 
-    void HandleValidSubmit()
+    private void DeleteClicked()
     {
 
     }
