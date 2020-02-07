@@ -43,7 +43,7 @@ namespace ToshaSite.Data.Implementations
 
         public void DeleteEntity(Entity e)
         {
-            if(db.Find<Entity>(e) != null)
+            if(db.Table<Entity>().Any(x => x.Id == e.Id))
             {
                 db.Delete(e);
             }
