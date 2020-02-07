@@ -5,6 +5,7 @@
 
 @inject IEntityService Service
 @inject ITokenService Tokens
+@inject IModalService Modals
 
 <div class="container">
     <AddEntity EditorMode="EditorMode" />
@@ -46,6 +47,14 @@
                 }, null, (int)((validBy.Value - DateTime.Now).TotalMilliseconds), Timeout.Infinite);
             }
         }
+        Modals.OnClose += r =>
+        {
+            if(!r.Cancelled)
+            {
+                ToshaEntities = Service.GetEntities().ToList();
+                StateHasChanged();
+            }
+        };
     }
 
     void AddOrEditEntity(Entity newEntity)

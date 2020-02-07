@@ -31,20 +31,12 @@ namespace ToshaSite.Components
                 var parameters = new ModalParameters();
                 parameters.Add("EntityObject", EntityObject ?? new Entity());
                 parameters.Add("Creating", EntityObject == null);
-                Modals.OnClose += Modals_OnClose;
                 Modals.Show<EntityEditor>(title, parameters);
             }
             else
             {
                 await Js.InvokeVoidAsync("go", EntityObject.Link);
             }
-        }
-
-        private void Modals_OnClose(ModalResult obj)
-        {
-
-
-            Modals.OnClose -= Modals_OnClose;
         }
     }
 }

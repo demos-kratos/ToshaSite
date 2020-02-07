@@ -1,6 +1,7 @@
 ﻿@page "/Edit"
 
 @inject ITokenService Tokens
+@inject IEntityService Service
 @inject NavigationManager Navigation
 
 <style>
@@ -51,6 +52,8 @@
 
     .alert {
         grid-area: 6 / 2 / 7 / 5;
+        color: white;
+        text-align: center;
     }
 </style>
 
@@ -60,11 +63,11 @@
     </div>
 
     <div class="username">
-        <input type="text" />
+        <input @bind="Username" type="text" />
     </div>
 
     <div class="password">
-        <input type="password" />
+        <input @bind="Password" type="password" />
     </div>
 
     <div class="checkButton">
@@ -72,18 +75,25 @@
     </div>
 
     <div class="alert">
-
+        @Alert
     </div>
 </div>
 
 @code {
     string Username { get; set; }
     string Password { get; set; }
-
+    string Alert { get; set; } = "";
     void Check()
     {
-        var token = Tokens.GetToken();
-
-        Navigation.NavigateTo($"/{token}");
+        Alert = "";
+        if(Service.CheckCredentials(Username, Password))
+        {
+            var token = Tokens.GetToken();
+            Navigation.NavigateTo($"/{token}");
+        }
+        else
+        {
+            Alert = "НЕПРАЛЬНА";
+        }
     }
 }

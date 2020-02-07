@@ -1,4 +1,5 @@
 ﻿@inject IModalService Modals
+@inject IEntityService Entities
 
 <style>
     .form {
@@ -52,7 +53,7 @@
     <button @onclick="SaveClicked">Сохранить</button>
     @if (!Creating)
     {
-        <button>Удалить</button>
+        <button @onclick="DeleteClicked">Удалить</button>
     }
 </div>
 
@@ -69,17 +70,27 @@
     {
         base.OnInitialized();
         EntityObject = Parameters.Get<Entity>("EntityObject");
-        IsDouble = EntityObject.Text != null;
+        IsDouble = EntityObject.ImageLink == null;
         Creating = Parameters.Get<bool>("Creating");
     }
 
     private void SaveClicked()
     {
-
+        if(IsDouble)
+        {
+            EntityObject.ImageLink = null;
+        }
+        else
+        {
+            EntityObject.Text = null;
+        }
+        Entities.SaveEntity(EntityObject);
+        Modals.Close(ModalResult.Ok(EntityObject));        
     }
 
     private void DeleteClicked()
     {
-
+        Entities.DeleteEntity(EntityObject);
+        Modals.Close(ModalResult.Ok(EntityObject)); 
     }
 }

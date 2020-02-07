@@ -1,49 +1,60 @@
 ﻿using Microsoft.JSInterop;
+using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ToshaSite.Data.Implementations
 {
     public class DummyService : IEntityService
     {
-        private List<Entity> Entities = new List<Entity>();
+        private SQLiteConnection db;
+        private UserSettings userSettings;
 
-        public DummyService()
+        public DummyService(UserSettings u)
         {
-            var r = new Random();
-            for(int i = 0; i < 40; i++)
-            {
-                var e = new Entity();
-                var style = r.NextDouble() > 0.5 ? "frogideas" : "heatwave";
-                e.Id = i;
-                e.ImageLink = r.NextDouble() > 0.2 ? $"http://tinygraphs.com/squares/{r.Next()}?theme={style}&numcolors=4&size=800&fmt=png" : null;
-                e.Text = "Здесь должен быть нормальный текст, но я ебал этим ща заниматься, такшо вот вам рыба.";
-                e.Link = "https://www.reddit.com";
-
-                Entities.Add(e);
-            }
+            var dbPath = Path.Combine(Environment.CurrentDirectory, "data.db");
+            db = new SQLiteConnection(dbPath);
+            db.CreateTable<Entity>();
+            userSettings = u;
         }
 
         public IEnumerable<Entity> GetEntities()
         {
-            return Entities;
+            return db.Table<Entity>();
         }
 
-        public void AddEntity(Entity e)
+        public void SaveEntity(Entity e)
         {
-            Entities.Add(e);
+            if(db.Table<Entity>().Any(x => x.Id == e.Id))
+            {
+                db.Update(e);
+            }
+            else
+            {
+                db.Insert(e);
+            }
         }
 
         public void DeleteEntity(Entity e)
         {
-            Entities.Remove(Entities.FirstOrDefault(x => x.Id == e.Id));
+            if(db.Find<Entity>(e) != null)
+            {
+                db.Delete(e);
+            }
         }
 
         public bool CheckCredentials(string username, string password)
         {
-            return true;
+            using var sha = SHA256.Create();
+            var currentPwdHash = BitConverter.ToString(sha.ComputeHash(Encoding.UTF8.GetBytes(password + userSettings.PwdSalt))).Replace("-", "");
+
+            return userSettings.Username == username && currentPwdHash == userSettings.PwdHash;
         }
     }
 }
