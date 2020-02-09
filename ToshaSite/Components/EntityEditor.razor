@@ -26,11 +26,6 @@
 
 <div class="form">
     <div>
-        <label for="i-link">Ссылка</label>
-        <input @bind="EntityObject.Link" id="i-link" type="text" />
-    </div>
-
-    <div>
         <label for="i-double">Двойная</label>
         <input style="width: auto;" @bind="IsDouble" id="i-double" type="checkbox" />
     </div>
@@ -49,6 +44,16 @@
             <input @bind="EntityObject.ImageLink" id="i-pic" type="text" />
         </div>
     }
+
+    <div>
+        <label for="i-link">Ссылка</label>
+        <input @bind="EntityObject.Link" id="i-link" type="text" />
+    </div>
+
+     <div>
+         <label for="i-weight">Вес</label>
+         <input @bind="EntityObject.Weight" id="i-weight" type="number" />
+     </div>
 
     <button @onclick="SaveClicked">Сохранить</button>
     @if (!Creating)

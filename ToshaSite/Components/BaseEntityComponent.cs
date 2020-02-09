@@ -12,18 +12,13 @@ namespace ToshaSite.Components
 {
     public abstract class BaseEntityComponent : ComponentBase
     {
-        [Inject]
-        protected IJSRuntime Js { get; set; }
+        [Inject] protected IJSRuntime Js { get; set; }
+        [Inject] protected IModalService Modals { get; set; }
+        [Inject] protected NavigationManager Navigation { get; set; }
+        [Parameter] public Entity EntityObject { get; set; }
+        [Parameter] public bool EditorMode { get; set; }
 
-        [Inject]
-        protected IModalService Modals { get; set; }
-
-        [Parameter]
-        public Entity EntityObject { get; set; }
-        [Parameter]
-        public bool EditorMode { get; set; }
-
-        protected async Task Click()
+        protected void Click()
         {
             if (EditorMode)
             {
@@ -35,7 +30,8 @@ namespace ToshaSite.Components
             }
             else
             {
-                await Js.InvokeVoidAsync("go", EntityObject.Link);
+                if(EntityObject.Link != null)
+                    Navigation.NavigateTo(EntityObject.Link);
             }
         }
     }

@@ -13,6 +13,7 @@
     <link href="_content/Blazored.Modal/blazored-modal.css" rel="stylesheet" />
 </head>
 <body>
+    <div style="display: none;" id="components-reconnect-modal"></div>
     <app>
         @(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))
     </app>

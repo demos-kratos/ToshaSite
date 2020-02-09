@@ -26,7 +26,7 @@ namespace ToshaSite.Data.Implementations
 
         public IEnumerable<Entity> GetEntities()
         {
-            return db.Table<Entity>();
+            return db.Table<Entity>().OrderBy(x => x.Weight).ThenByDescending(x => x.CreationDate);
         }
 
         public void SaveEntity(Entity e)
@@ -37,6 +37,7 @@ namespace ToshaSite.Data.Implementations
             }
             else
             {
+                e.CreationDate = DateTime.Now;
                 db.Insert(e);
             }
         }

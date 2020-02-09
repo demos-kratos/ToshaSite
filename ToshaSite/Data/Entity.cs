@@ -13,5 +13,7 @@ namespace ToshaSite.Data
         public string Link { get; set; }
         public string ImageLink { get; set; }
         public string Text { get; set; }
+        public int Weight { get; set; } = 100;
+        public DateTime CreationDate { get; set; }
     }
 }
