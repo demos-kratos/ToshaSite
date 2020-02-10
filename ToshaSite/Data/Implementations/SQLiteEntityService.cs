@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace ToshaSite.Data.Implementations
 {
-    public class DummyService : IEntityService
+    public class SQLiteEntityService : IEntityService
     {
         private SQLiteConnection db;
         private UserSettings userSettings;
 
-        public DummyService(UserSettings u)
+        public SQLiteEntityService(UserSettings u)
         {
             var dbPath = Path.Combine(Environment.CurrentDirectory, "data.db");
             db = new SQLiteConnection(dbPath);

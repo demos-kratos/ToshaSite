@@ -32,7 +32,7 @@ namespace ToshaSite
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IEntityService, DummyService>(s => new DummyService(Configuration.GetSection("UserSettings").Get<UserSettings>()));
+            services.AddSingleton<IEntityService, SQLiteEntityService>(s => new SQLiteEntityService(Configuration.GetSection("UserSettings").Get<UserSettings>()));
             services.AddSingleton<ITokenService, TokenService>();
             services.AddBlazoredModal();
             services.AddRazorPages();
